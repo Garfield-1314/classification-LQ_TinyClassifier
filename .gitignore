@@ -38,7 +38,9 @@ env/
 **/pnnx-*/
 
 # --- Datasets (large, not committed) ---
-datasets/
+# 忽略所有数据集，但保留 example 示例
+datasets/*
+!datasets/example/
 
 # --- NCNN Build Output ---
 **/out/
