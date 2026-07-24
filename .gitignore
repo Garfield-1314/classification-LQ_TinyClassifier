@@ -1,0 +1,51 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*$py.class
+*.so
+
+# --- Jupyter Notebook ---
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# --- VS Code (local only) ---
+.vscode/
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# --- IDE / OS ---
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# --- Environment ---
+.env
+.venv/
+venv/
+env/
+
+# --- Training Artifacts ---
+**/artifacts/
+**/artifacts_mobilenetv2/
+
+# --- PNNX Toolchain ---
+**/pnnx-*/
+
+# --- Datasets (large, not committed) ---
+# 忽略所有数据集，但保留 example 示例
+datasets/*
+!datasets/example/
+
+# --- NCNN Build Output ---
+**/out/
+
+# --- Binary Libraries ---
+*.a
+*.lib
+*.o
