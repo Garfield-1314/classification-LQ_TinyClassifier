@@ -1,0 +1,3 @@
+/home/seekfree/走马观碑（4m龙芯全元素）/Seekfree_LS2K0300_Opensource_Library/project/out/CMakeFiles/project.dir
+/home/seekfree/走马观碑（4m龙芯全元素）/Seekfree_LS2K0300_Opensource_Library/project/out/CMakeFiles/edit_cache.dir
+/home/seekfree/走马观碑（4m龙芯全元素）/Seekfree_LS2K0300_Opensource_Library/project/out/CMakeFiles/rebuild_cache.dir
