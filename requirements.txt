@@ -1,35 +1,53 @@
-# Core dependencies for LQ TinyClassifier
-# Install with: python -m pip install -r requirements.txt
-# For pinned versions, see LQ_TinyClassifier/requirements.txt
+# LQ TinyClassifier 合并依赖（GPU CUDA 11.8 版）
+# Install with: pip install -r requirements.txt
+# Python 3.11
+# PyTorch: CUDA 11.8 版（RTX 3080）
+# 已合并 LQ_TinyClassifier/requirements.txt 的固定版本约束
 
-# Deep learning
-torch>=2.1.0
-torchvision>=0.16.0
+# ===== Deep Learning（CUDA 11.8 GPU 版）=====
+# 国内镜像没有 +cu118 版本，使用 --extra-index-url 从 PyTorch 官方源查找
+# 其余包从阿里云镜像安装
+--index-url https://mirrors.aliyun.com/pypi/simple
+--extra-index-url https://download.pytorch.org/whl/cu118
+torch==2.4.1+cu118
+torchvision==0.19.1+cu118
+# 如遇速度问题可替换 --index-url 为 https://pypi.tuna.tsinghua.edu.cn/simple
 
-# ONNX export & inference
-onnx>=1.14.0
-onnxsim>=0.4.0
-onnxruntime>=1.15.0
+# ===== ONNX 导出与推理 =====
+onnx==1.17.0
+# 使用 >= 避免 Windows 长路径问题（0.5.0 只有源码包）
+onnxsim>=0.5.0
+onnxruntime==1.19.2
 
-# Numerical & image processing
-numpy>=1.25.0
-pillow>=10.0.0
+# ===== 数值计算与图像处理 =====
+numpy==1.24.4
+pillow==10.4.0
 
-# Training utilities
-tqdm>=4.60.0
+# ===== 训练工具 =====
+tqdm==4.67.3
 
-# Logging (rich CLI)
-rich>=13.0.0
-coloredlogs>=15.0.0
+# ===== 日志 =====
+rich==14.3.3
+coloredlogs==15.0.1
+colorama==0.4.6
+humanfriendly==10.0
+Pygments==2.19.2
+pyreadline3==3.5.4
+markdown-it-py==3.0.0
+mdurl==0.1.2
 
-# Plotting (Jupyter notebook)
+# ===== 绘图（Jupyter Notebook）=====
 matplotlib>=3.7.0
 
-# Underlying dependencies (torch/torchvision depend on these)
-protobuf>=4.21.0
-packaging>=21.0
-Jinja2>=3.0.0
-sympy>=1.12
-filelock>=3.10.0
-fsspec>=2023.0.0
-typing_extensions>=4.5.0
+# ===== PyTorch 底层依赖 =====
+protobuf==5.29.6
+packaging==26.0
+Jinja2==3.1.6
+MarkupSafe==2.1.5
+sympy==1.13.3
+mpmath==1.3.0
+filelock==3.16.1
+fsspec==2025.3.0
+typing_extensions==4.13.2
+networkx==3.1
+flatbuffers==25.12.19

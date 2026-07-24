@@ -1,0 +1,3 @@
+[submodule "LQ_TinyClassifier"]
+	path = LQ_TinyClassifier
+	url = https://gitee.com/lq-tech/LQ_TinyClassifier.git

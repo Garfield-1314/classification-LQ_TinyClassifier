@@ -37,18 +37,26 @@ def set_seed(seed: int) -> None:
 
 
 class MobileNetV2Classifier(nn.Module):
-    """MobileNetV2 分类器（独立模块，不影响原始 TinyClassifier）。"""
+    """MobileNetV2 分类器（独立模块，不影响原始 TinyClassifier）。
 
-    def __init__(self, num_classes: int, width_mult: float = 1.0):
+    Args:
+        num_classes: 分类数量。
+        width_mult: MobileNetV2 宽度缩放系数。
+        dropout: 分类头前的 Dropout 概率，0.0 表示不启用。
+    """
+
+    def __init__(self, num_classes: int, width_mult: float = 1.0, dropout: float = 0.0):
         super().__init__()
         model = mobilenet_v2(weights=None, width_mult=width_mult)
         self.features = model.features  # backbone
         self.pool = nn.AdaptiveAvgPool2d(1)
+        self.dropout = nn.Dropout(p=dropout) if dropout > 0.0 else nn.Identity()
         self.classifier = nn.Linear(1280, num_classes)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         x = self.features(x)
         x = self.pool(x).flatten(1)
+        x = self.dropout(x)
         return self.classifier(x)
 
 
@@ -193,6 +201,7 @@ def main():
     parser.add_argument("--num-workers", type=int, default=4)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--width-mult", type=float, default=1.0)
+    parser.add_argument("--dropout", type=float, default=0.0, help="分类头 Dropout 概率，0.0 表示不启用")
     parser.add_argument("--patience", type=int, default=8)
     parser.add_argument("--target-acc", type=float, default=0.95)
     parser.add_argument("--out-dir", type=str, default="artifacts_mobilenetv2")
@@ -223,11 +232,17 @@ def main():
         seed=args.seed,
     )
 
-    model = MobileNetV2Classifier(num_classes=len(classes), width_mult=args.width_mult).to(device)
+    model = MobileNetV2Classifier(
+        num_classes=len(classes),
+        width_mult=args.width_mult,
+        dropout=args.dropout,
+    ).to(device)
+
     n_params = sum(p.numel() for p in model.parameters())
     print(f"Classes: {classes}")
     print(f"Train/Val/Test: {len(train_loader.dataset)}/{len(val_loader.dataset)}/{len(test_loader.dataset)}")
     print(f"Model params: {n_params}")
+    print(f"Dropout: {args.dropout}")
 
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)

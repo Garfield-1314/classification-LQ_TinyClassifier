@@ -2,6 +2,8 @@
 
 基于 LQ_TinyClassifier（龙邱科技）的图像分类训练工程。从 PC 训练到嵌入式部署（Seekfree LS2K0300）的全流程解决方案。
 
+> **注意**：`LQ_TinyClassifier/` 是 git 子模块（仓库：https://gitee.com/lq-tech/LQ_TinyClassifier.git），clone 后需执行初始化命令拉取其内容，详见下方[环境安装](#环境安装)。
+
 支持两种 backbone 架构，在同一个 Notebook 中自由切换：
 
 | Backbone | 参数量 | 特点 | 适用场景 |
@@ -12,6 +14,18 @@
 两者完全独立、互不影响，原始代码未做任何修改。
 
 ---
+
+## 克隆与初始化
+
+```bash
+# 克隆仓库（含子模块）
+git clone --recurse-submodules git@github.com:Garfield-1314/classification-LQ_TinyClassifier.git
+
+# 如果已克隆但未拉取子模块，执行：
+git submodule update --init --recursive
+```
+
+`LQ_TinyClassifier/` 是 git 子模块（远程仓库：https://gitee.com/lq-tech/LQ_TinyClassifier.git），**必须初始化**后该目录才会有 `train_tiny_classifier.py` 等文件，否则 notebook 会报 `ModuleNotFoundError: No module named 'train_tiny_classifier'`。
 
 ## 环境安装
 
@@ -68,7 +82,7 @@ classification-LQ_TinyClassifier/
 │   ├── 2/                           ← 类别 2 图片
 │   └── 3/                           ← 类别 3 图片
 │
-├── LQ_TinyClassifier/               ← 原始 tiny_custom 项目（未修改）
+├── LQ_TinyClassifier/               ← 原始 tiny_custom 项目（git 子模块，未修改）
 │   ├── train_tiny_classifier.py     ← tiny_custom 独立训练脚本
 │   ├── evaluate_local_accuracy.py   ← 本地精度复核
 │   ├── evaluate_random_subset_accuracy.py  ← 随机抽样精度验证
